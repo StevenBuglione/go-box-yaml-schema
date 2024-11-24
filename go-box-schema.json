@@ -1,138 +1,153 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Distrobox Configuration",
+  "title": "Go-Box Schema",
   "type": "object",
   "properties": {
-    "image": {
-      "type": "string",
-      "description": "Image to use for the container",
-      "default": "${container_image_default}"
-    },
-    "name": {
-      "type": "string",
-      "description": "Name for the distrobox",
-      "default": "${container_name_default}"
-    },
-    "hostname": {
-      "type": "string",
-      "description": "Hostname for the distrobox",
-      "default": "<container-name>.$(uname -n)"
-    },
-    "pull": {
-      "type": "boolean",
-      "description": "Pull the image even if it exists locally (implies --yes)"
-    },
-    "yes": {
-      "type": "boolean",
-      "description": "Non-interactive, pull images without asking"
-    },
-    "root": {
-      "type": "boolean",
-      "description": "Launch with root privileges. Preferred way over 'sudo distrobox'"
-    },
-    "clone": {
-      "type": "string",
-      "description": "Name of the distrobox container to use as base for a new container"
-    },
-    "home": {
-      "type": "string",
-      "description": "Select a custom HOME directory for the container"
-    },
-    "volume": {
-      "type": "array",
-      "items": {
-        "type": "string"
+    "go-box": {
+      "type": "object",
+      "description": "Configuration for Go-Box, a wrapper around Distrobox",
+      "properties": {
+        "init-script-args": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key-value pairs for initialization script arguments"
+        },
+        "image": {
+          "type": "string",
+          "description": "Image to use for the container",
+          "default": "${container_image_default}"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the distrobox",
+          "default": "${container_name_default}"
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname for the distrobox",
+          "default": "<container-name>.$(uname -n)"
+        },
+        "pull": {
+          "type": "boolean",
+          "description": "Pull the image even if it exists locally (implies --yes)"
+        },
+        "yes": {
+          "type": "boolean",
+          "description": "Non-interactive, pull images without asking"
+        },
+        "root": {
+          "type": "boolean",
+          "description": "Launch with root privileges. Preferred way over 'sudo distrobox'"
+        },
+        "clone": {
+          "type": "string",
+          "description": "Name of the distrobox container to use as base for a new container"
+        },
+        "home": {
+          "type": "string",
+          "description": "Select a custom HOME directory for the container"
+        },
+        "volume": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional volumes to add to the container"
+        },
+        "additional-flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional flags to pass to the container manager command"
+        },
+        "additional-packages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional packages to install during initial container setup"
+        },
+        "init-hooks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional commands to execute at the end of container initialization"
+        },
+        "pre-init-hooks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional commands to execute at the start of container initialization"
+        },
+        "init": {
+          "type": "boolean",
+          "description": "Use init system (like systemd) inside the container"
+        },
+        "nvidia": {
+          "type": "boolean",
+          "description": "Try to integrate host's nVidia drivers in the guest"
+        },
+        "unshare-devsys": {
+          "type": "boolean",
+          "description": "Do not share host devices and sysfs dirs from host"
+        },
+        "unshare-groups": {
+          "type": "boolean",
+          "description": "Do not forward user's additional groups into the container"
+        },
+        "unshare-ipc": {
+          "type": "boolean",
+          "description": "Do not share IPC namespace with host"
+        },
+        "unshare-netns": {
+          "type": "boolean",
+          "description": "Do not share the net namespace with host"
+        },
+        "unshare-process": {
+          "type": "boolean",
+          "description": "Do not share process namespace with host"
+        },
+        "unshare-all": {
+          "type": "boolean",
+          "description": "Activate all the unshare flags below"
+        },
+        "compatibility": {
+          "type": "boolean",
+          "description": "Show list of compatible images"
+        },
+        "help": {
+          "type": "boolean",
+          "description": "Show help message"
+        },
+        "no-entry": {
+          "type": "boolean",
+          "description": "Do not generate a container entry in the application list"
+        },
+        "dry-run": {
+          "type": "boolean",
+          "description": "Only print the container manager command generated"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Show more verbosity"
+        },
+        "version": {
+          "type": "boolean",
+          "description": "Show version"
+        },
+        "absolutely-disable-root-password-i-am-really-positively-sure": {
+          "type": "boolean",
+          "description": "⚠️ Skip user password setup when setting up a rootful distrobox, leaving it blank ⚠️"
+        }
       },
-      "description": "Additional volumes to add to the container"
-    },
-    "additional-flags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Additional flags to pass to the container manager command"
-    },
-    "additional-packages": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Additional packages to install during initial container setup"
-    },
-    "init-hooks": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Additional commands to execute at the end of container initialization"
-    },
-    "pre-init-hooks": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Additional commands to execute at the start of container initialization"
-    },
-    "init": {
-      "type": "boolean",
-      "description": "Use init system (like systemd) inside the container"
-    },
-    "nvidia": {
-      "type": "boolean",
-      "description": "Try to integrate host's nVidia drivers in the guest"
-    },
-    "unshare-devsys": {
-      "type": "boolean",
-      "description": "Do not share host devices and sysfs dirs from host"
-    },
-    "unshare-groups": {
-      "type": "boolean",
-      "description": "Do not forward user's additional groups into the container"
-    },
-    "unshare-ipc": {
-      "type": "boolean",
-      "description": "Do not share IPC namespace with host"
-    },
-    "unshare-netns": {
-      "type": "boolean",
-      "description": "Do not share the net namespace with host"
-    },
-    "unshare-process": {
-      "type": "boolean",
-      "description": "Do not share process namespace with host"
-    },
-    "unshare-all": {
-      "type": "boolean",
-      "description": "Activate all the unshare flags below"
-    },
-    "compatibility": {
-      "type": "boolean",
-      "description": "Show list of compatible images"
-    },
-    "help": {
-      "type": "boolean",
-      "description": "Show help message"
-    },
-    "no-entry": {
-      "type": "boolean",
-      "description": "Do not generate a container entry in the application list"
-    },
-    "dry-run": {
-      "type": "boolean",
-      "description": "Only print the container manager command generated"
-    },
-    "verbose": {
-      "type": "boolean",
-      "description": "Show more verbosity"
-    },
-    "version": {
-      "type": "boolean",
-      "description": "Show version"
-    },
-    "absolutely-disable-root-password-i-am-really-positively-sure": {
-      "type": "boolean",
-      "description": "⚠️ Skip user password setup when setting up a rootful distrobox, leaving it blank ⚠️"
+      "required": ["image", "name"]
     }
   },
   "additionalProperties": false
 }
+
